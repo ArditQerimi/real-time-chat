@@ -1,0 +1,105 @@
+.chat-list {
+  background: #ffffff;
+  border-right: 1px solid #e0e0e0;
+  display: flex;
+  flex-direction: column;
+  font-family: 'Segoe UI', sans-serif;
+  height: 100vh;
+  overflow-y: auto;
+}
+
+.chat-item.main-room {
+  display: flex;
+  align-items: center;
+  padding: 12px 15px;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.chat-item.main-room:hover,
+.user-item:hover {
+  background: #f0f2f5;
+}
+
+.chat-item.active {
+  background: #e1ecf9;
+  border-left: 4px solid #4a90e2;
+}
+
+.avatar-container {
+  margin-right: 12px;
+}
+
+.room-avatar {
+  width: 40px;
+  height: 40px;
+  background: #4a90e2;
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+  font-size: 1.1rem;
+  border-radius: 50%;
+}
+
+.chat-info h3 {
+  margin: 0;
+  font-size: 1rem;
+  font-weight: 600;
+}
+
+.chat-info .status {
+  font-size: 0.8rem;
+  color: #666;
+}
+
+.online-users-section {
+  margin-top: 20px;
+  padding: 0 10px;
+}
+
+.section-title {
+  font-weight: 600;
+  font-size: 0.9rem;
+  margin-bottom: 8px;
+  color: #333;
+}
+
+.users-scroll {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+
+.user-item {
+  padding: 8px 12px;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: background 0.2s;
+  font-size: 0.9rem;
+}
+
+.user-item.active {
+  background: #e1ecf9;
+  border-left: 4px solid #4a90e2;
+}
+
+.user-item.me {
+  font-weight: 600;
+  color: #4a90e2;
+  cursor: default;
+}
+
+.you-tag {
+  font-size: 0.75rem;
+  color: #888;
+  margin-left: 4px;
+}
+
+.no-users {
+  font-size: 0.85rem;
+  color: #888;
+  padding: 4px 0;
+}

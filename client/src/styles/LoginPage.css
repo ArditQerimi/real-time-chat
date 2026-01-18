@@ -1,0 +1,224 @@
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: -apple-system, BlinkMacC, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', sans-serif;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  min-height: 100vh;
+  color: #333;
+}
+
+.login-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  padding: 20px;
+}
+
+.login-card {
+  background: white;
+  border-radius: 16px;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+  padding: 2.5rem 2rem;
+  width: 100%;
+  max-width: 420px;
+  transition: transform 0.3s ease;
+}
+
+.login-card:hover {
+  transform: translateY(-5px);
+}
+
+h1 {
+  font-size: 2.1rem;
+  font-weight: 700;
+  color: #1a1a1a;
+  margin-bottom: 0.5rem;
+  text-align: center;
+}
+
+.login-card > p {
+  text-align: center;
+  color: #666;
+  margin-bottom: 2rem;
+  font-size: 0.95rem;
+}
+
+/* Auth toggle */
+.auth-toggle {
+  display: flex;
+  background: #f0f0f0;
+  border-radius: 50px;
+  padding: 4px;
+  margin-bottom: 1.8rem;
+}
+
+.auth-toggle button {
+  flex: 1;
+  padding: 0.75rem;
+  border: none;
+  background: transparent;
+  font-weight: 600;
+  cursor: pointer;
+  border-radius: 50px;
+  transition: all 0.3s ease;
+  font-size: 0.95rem;
+}
+
+.auth-toggle button.active {
+  background: white;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  color: #667eea;
+}
+
+.login-input {
+  width: 100%;
+  padding: 0.9rem 1.1rem;
+  margin-bottom: 1.1rem;
+  border: 1.5px solid #ddd;
+  border-radius: 10px;
+  font-size: 1rem;
+  transition: all 0.25s ease;
+}
+
+.login-input:focus {
+  outline: none;
+  border-color: #667eea;
+  box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.15);
+}
+
+.error {
+  color: #e74c3c;
+  font-size: 0.85rem;
+  margin-bottom: 1rem;
+  text-align: center;
+  font-weight: 500;
+}
+
+.room-selection {
+  margin: 1.6rem 0;
+}
+
+.room-label {
+  display: block;
+  font-weight: 600;
+  margin-bottom: 0.9rem;
+  color: #444;
+}
+
+.room-options {
+  max-height: 180px;
+  overflow-y: auto;
+  padding-right: 8px;
+}
+
+.room-option {
+  display: flex;
+  align-items: center;
+  padding: 0.8rem 1rem;
+  margin-bottom: 0.6rem;
+  border-radius: 10px;
+  background: #f8f9fa;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  user-select: none;
+}
+
+.room-option:hover {
+  background: #f0f4ff;
+}
+
+.room-option.selected {
+  background: #e8eeff;
+  border-left: 4px solid #667eea;
+}
+
+.room-option input[type="radio"] {
+  margin-right: 1rem;
+}
+
+.create-room {
+  display: flex;
+  gap: 10px;
+  margin: 1.6rem 0;
+}
+
+.create-room input {
+  flex: 1;
+  padding: 0.9rem 1.1rem;
+  border: 1.5px solid #ddd;
+  border-radius: 10px;
+  font-size: 0.95rem;
+}
+
+.create-room button {
+  padding: 0 1.4rem;
+  background: #95a5a6;
+  color: white;
+  border: none;
+  border-radius: 10px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.25s;
+}
+
+.create-room button:hover {
+  background: #7f8c8d;
+}
+
+.join-btn {
+  width: 100%;
+  padding: 1rem;
+  background: #667eea;
+  color: white;
+  border: none;
+  border-radius: 10px;
+  font-size: 1.1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  margin-top: 1.2rem;
+}
+
+.join-btn:hover {
+  background: #5a67d8;
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(102, 126, 234, 0.35);
+}
+
+.join-btn:active {
+  transform: translateY(0);
+}
+
+.room-options::-webkit-scrollbar {
+  width: 6px;
+}
+
+.room-options::-webkit-scrollbar-track {
+  background: #f1f1f1;
+  border-radius: 10px;
+}
+
+.room-options::-webkit-scrollbar-thumb {
+  background: #aaa;
+  border-radius: 10px;
+}
+
+.room-options::-webkit-scrollbar-thumb:hover {
+  background: #888;
+}
+
+@media (max-width: 480px) {
+  .login-card {
+    padding: 2rem 1.4rem;
+  }
+
+  h1 {
+    font-size: 1.8rem;
+  }
+}

@@ -1,0 +1,54 @@
+generator client {
+  provider = "prisma-client-js"
+  output   = "../generated/prisma/client"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+model User {
+  id        String   @id @default(uuid())
+  username  String   @unique
+  password  String // hashed!
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  messagesSent     Message[] @relation("SentMessages")
+  messagesReceived Message[] @relation("ReceivedMessages")
+
+  @@map("users")
+}
+
+model Room {
+  id          String   @id @default(uuid())
+  slug        String   @unique // url-friendly: general, programming, memes...
+  name        String
+  description String?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  messages Message[]
+
+  @@map("rooms")
+}
+
+model Message {
+  id        String   @id @default(uuid())
+  content   String
+  encrypted Boolean  @default(false)
+  fromId    String
+  toId      String? // null = room message
+  roomId    String?
+  createdAt DateTime @default(now())
+
+  from User? @relation("SentMessages", fields: [fromId], references: [id], onDelete: Cascade)
+  to   User? @relation("ReceivedMessages", fields: [toId], references: [id], onDelete: SetNull)
+  room Room? @relation(fields: [roomId], references: [id], onDelete: Cascade)
+
+  @@index([roomId])
+  @@index([fromId])
+  @@index([toId])
+  @@index([fromId, toId]) // fast private chat history
+  @@map("messages")
+}
