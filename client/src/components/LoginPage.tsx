@@ -36,7 +36,6 @@ const LoginPage: React.FC<LoginPageProps> = ({ handleLogin }) => {
 
       localStorage.setItem('token', token);
       initializeSocket();
-      console.log('res.data', res.data)
       handleLogin(username)
       navigate('/rooms', { state: { username: trimmedUsername } });
     } catch (err: any) {

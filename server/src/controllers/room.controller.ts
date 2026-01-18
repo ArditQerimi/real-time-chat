@@ -3,7 +3,6 @@ import { prisma } from "../prismaClient";
 
 export const createRoom = async (req: Request, res: Response) => {
   try {
-    console.log(req.body);
     const { name, slug } = req.body;
     const existing = await prisma.room.findUnique({
       where: { slug },

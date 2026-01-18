@@ -27,18 +27,15 @@ export default function setupSocket(io: Server): void {
       return;
     }
 
-    console.log(`User: ${user.username} (${socket.id})`);
 
     socket.join(`user:${user.username}`);
 
     socket.on("join_room", async ({ room }: { room: string }) => {
       try {
-        console.log(`${user.username} is joining room: ${room}`);
         const foundedRoom = await prisma.room.findUnique({
           where: { slug: room.toLowerCase() },
         });
 
-        console.log("Found room record:", foundedRoom);
         if (!foundedRoom) {
           socket.emit("error", { message: "Room does not exist" });
           return;
@@ -51,7 +48,6 @@ export default function setupSocket(io: Server): void {
         io.to(room).emit("system", `${user.username} joined ${room}`);
 
         const onlineUsers = await redis.sMembers(onlineUsersKey(room));
-        console.log("Online users in room", room, ":", onlineUsers);
         io.to(room).emit("online_users", onlineUsers);
       } catch (err) {
         console.error("join_room error:", err);
@@ -85,9 +81,7 @@ export default function setupSocket(io: Server): void {
 
           socket.join(roomKey);
 
-          console.log(
-            `${user.username} joined private chat with ${targetUser.username}`,
-          );
+    
         } catch (err) {
           console.error("join_private error:", err);
           socket.emit("error", { message: "Failed to join private chat" });
@@ -95,21 +89,26 @@ export default function setupSocket(io: Server): void {
       },
     );
 
-    socket.on(
-      "typing",
-      ({ room, isTyping }: { room: string; isTyping: boolean }) => {
-        socket.to(room).emit("typing", {
-          username: user.username,
-          isTyping,
-        });
-      },
-    );
+ socket.on(
+  "typing",
+  ({ room, to, isTyping }: { room?: string; to?: string; isTyping: boolean }) => {
+    if (to) {
+      io.to(`user:${to}`).emit("typing", {
+        username: user.username,
+        isTyping,
+      });
+    } else if (room) {
+      socket.to(room).emit("typing", {
+        username: user.username,
+        isTyping,
+      });
+    }
+  },
+);
 
     socket.on(
       "message",
       async ({ text, room }: { text: string; room: string }) => {
-        console.log(`Room message from ${user.username} to room ${room}`);
-        console.log("Socket rooms:", Array.from(socket.rooms));
         try {
           if (text?.length === 0) {
             socket.emit("error", { message: "Invalid message content" });
@@ -147,7 +146,6 @@ export default function setupSocket(io: Server): void {
             include: { from: { select: { username: true } } },
           });
 
-          console.log("savedMessage", savedMessage);
 
           const payload: MessagePayload = {
             id: savedMessage.id,
@@ -176,8 +174,6 @@ export default function setupSocket(io: Server): void {
     socket.on(
       "private_message",
       async ({ text, to }: { text: string; to: string }) => {
-        console.log("User:", user);
-        console.log(`To user: ${to}`);
         try {
           if (text.length === 0) {
             socket.emit("error", { message: "Invalid message content" });
@@ -196,7 +192,6 @@ export default function setupSocket(io: Server): void {
             select: { id: true, username: true },
           });
 
-          console.log("Receiver user here:", receiver);
 
           if (!receiver) {
             socket.emit("error", { message: "User not found" });
@@ -208,7 +203,6 @@ export default function setupSocket(io: Server): void {
             AES_SECRET,
           ).toString();
 
-          console.log("FinalContent", encryptedContent);
 
           const savedMessage = await prisma.message.create({
             data: {
@@ -249,7 +243,6 @@ export default function setupSocket(io: Server): void {
     );
 
     socket.on("disconnect", async () => {
-      console.log(`User disconnected: ${user.username} (${socket.id})`);
 
       const rooms = Array.from(socket.rooms).filter((r) => r !== socket.id);
 

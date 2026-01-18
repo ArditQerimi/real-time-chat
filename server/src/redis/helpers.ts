@@ -40,12 +40,7 @@ export async function saveMessage(
   message: Message,
   isPrivateMessage?: boolean,
 ): Promise<void> {
-  console.log(
-    "Saving message:",
-    message,
-    "isPrivateMessage:",
-    isPrivateMessage,
-  );
+
   const key = generateMessageKey(message, isPrivateMessage);
 
   await redis

@@ -139,19 +139,20 @@ const ChatPage: React.FC<Props> = ({
       }
     });
 
-    socket.on('typing', ({ username, isTyping }: { username: string; isTyping: boolean }) => {
-      if (username === currentUsername) return;
+      socket.on('typing', ({ username, isTyping }: { username: string; isTyping: boolean }) => {
+         if (username === currentUsername) return;
 
-      setTypingUsers((prev) => {
-        const newSet = new Set(prev);
-        if (isTyping) {
-          newSet.add(username);
-        } else {
-          newSet.delete(username);
-        }
-        return newSet;
-      });
-    });
+          setTypingUsers((prev) => {
+            const newSet = new Set(prev);
+            if (isTyping) {
+              newSet.add(username);
+            } else {
+              newSet.delete(username);
+            }
+            return newSet;
+          });
+        });
+
 
     socket.on('system', (text: string) => {
       setGroupMessages((prev) => [

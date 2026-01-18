@@ -10,7 +10,6 @@ export const getRoomHistory = async (req: Request, res: Response) => {
 
   try {
     const messages = await getHistory(key.toLowerCase(), page, size);
-    console.log("messages and room", room, "-", messages);
     res.json(messages);
   } catch (error) {
     res.status(500).json({ message: "Failed to load history messages" });
