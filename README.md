@@ -24,6 +24,8 @@ Simple chat application with rooms and real-time messages.
 # 1. Go to project folder
 cd chat-app
 
-# 2. Start everything with one command
+# 2. Create .env files from .env.example in root folder, then in client and server folders
+
+# 3. Start everything with one command
 docker compose up --build
 ```
